@@ -1,11 +1,30 @@
 import os
 import json
 import google.generativeai as genai
+import streamlit as st # ★追加：Streamlitの機能を使う
 from dotenv import load_dotenv
 
-# 環境変数の読み込み
+# ---------------------------------------------------------
+# APIキーの読み込み（ローカル・クラウド両対応版）
+# ---------------------------------------------------------
+
+# 1. まずローカルの .env を読み込む（ローカル開発用）
 load_dotenv()
-api_key = os.getenv("GEMINI_API_KEY")
+
+# 2. APIキーを取得するロジック
+# Streamlit Cloud上なら st.secrets から、ローカルなら os.getenv から取る
+try:
+    if "GEMINI_API_KEY" in st.secrets:
+        api_key = st.secrets["GEMINI_API_KEY"]
+    else:
+        api_key = os.getenv("GEMINI_API_KEY")
+except FileNotFoundError:
+    # ローカルでsecrets.tomlがない場合は.envに頼る
+    api_key = os.getenv("GEMINI_API_KEY")
+
+# ---------------------------------------------------------
+# 以下は変更なし（ただしモデル設定などはそのまま）
+# ---------------------------------------------------------
 
 # APIキーがない場合のエラーチェック
 if not api_key:
@@ -15,7 +34,8 @@ else:
     genai.configure(api_key=api_key)
 
 # 動作を軽くするため Flash モデルを使用
-model = genai.GenerativeModel('gemini-3-flash-preview')
+# ※注意: gemini-3系がまだ安定していない場合は gemini-1.5-flash に戻してください
+model = genai.GenerativeModel('gemini-1.5-flash') 
 
 def call_judge_ai(prompt_text):
     """
