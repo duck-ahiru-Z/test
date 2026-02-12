@@ -33,7 +33,7 @@ with st.sidebar:
        - つまらない嘘はバレます
        
     ### 🏅 ランクについて
-    一度もミスせずに全クリアすると…？
+    最後にランクが…？
     """)
     
     st.write("---")
@@ -226,4 +226,5 @@ if st.session_state.last_result is not None:
         
         if st.button("もう一度挑戦"):
             st.session_state.last_result = None
+
             st.rerun()
