@@ -26,7 +26,7 @@ else:
 
 # ★重要：モデルを安定版に戻す
 # 'gemini-3' はまだ不安定で、クラウドだとフリーズする原因になります
-model = genai.GenerativeModel('gemini-1.5-flash')
+model = genai.GenerativeModel('gemini-3-flash-preview')
 
 def call_judge_ai(prompt_text):
     """
@@ -47,3 +47,4 @@ def call_judge_ai(prompt_text):
             "girl_reply": "（…聞こえないみたい）",
             "damage_score": 0
         }
+
