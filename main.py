@@ -223,8 +223,10 @@ if st.session_state.last_result is not None:
         st.markdown(f"**{current_girl['name']}**: 「{res['girl_reply']}」")
         st.write(f"**敗因**: {res['reason']}")
         st.caption(f"この女子へのリトライ回数: {st.session_state.stats['current_stage_miss']}回")
-        
+
+        st.write(f"**精神ダメージ**: {res.get('damage_score', 100)}")
         if st.button("もう一度挑戦"):
             st.session_state.last_result = None
 
             st.rerun()
+
